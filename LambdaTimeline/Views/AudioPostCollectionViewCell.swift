@@ -8,16 +8,35 @@
 
 import UIKit
 
-class AudioPostCollectionViewCell: UICollectionViewCell {
-    //MARK: Private Properties
+class AudioPostCollectionViewCell: UICollectionViewCell, PlayerDelegate {
+    
     var audioFile: URL?
-    private let audioPlayer = Player()
+    var post: Post?
+    
+    //MARK: Private Properties
+    var audioPlayer: Player?
+    
     //MARK: IBOutlets
     @IBOutlet weak var authorLabel: UILabel!
+    @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var playAudioButton: UIButton!
     
+    //MARK: IBActions
     @IBAction func playAudioButtonWasTapped(_ sender: Any) {
-        audioPlayer.play(audioFile: audioFile!)
+        audioPlayer?.playPause(audioFile: audioFile!)
+        updateViews()
+    }
+    
+    //MARK: Delegate Methods
+    func playerDidChangeState(_ player: Player) {
+        updateViews()
+    }
+    
+    //MARK: Private Methods
+    private func updateViews() {
+        let isPlaying = audioPlayer?.isPlaying
+        playAudioButton.setTitle(isPlaying! ? "Pause Audio" : "Play Audio"
+            , for: .normal)
     }
     
     

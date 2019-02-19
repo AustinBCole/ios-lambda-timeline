@@ -18,28 +18,44 @@
                 <rect key="frame" x="0.0" y="0.0" width="327" height="50"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Plb-Fb-pJW">
-                        <rect key="frame" x="20" y="15" width="42" height="21"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZQV-Bu-kNX">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZQV-Bu-kNX">
                         <rect key="frame" x="261" y="10" width="46" height="30"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <state key="normal" title="Button"/>
                         <connections>
                             <action selector="playAudioButtonWasTapped:" destination="399-Bv-9K4" eventType="touchUpInside" id="ryH-nr-c6U"/>
                         </connections>
                     </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="geW-yL-v3l">
+                        <rect key="frame" x="211" y="15" width="42" height="20"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Plb-Fb-pJW">
+                        <rect key="frame" x="20" y="15" width="42" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
             </view>
+            <constraints>
+                <constraint firstItem="Plb-Fb-pJW" firstAttribute="centerY" secondItem="geW-yL-v3l" secondAttribute="centerY" id="4Ji-64-J46"/>
+                <constraint firstItem="Plb-Fb-pJW" firstAttribute="firstBaseline" secondItem="geW-yL-v3l" secondAttribute="firstBaseline" id="5VV-oB-FyI"/>
+                <constraint firstItem="ZQV-Bu-kNX" firstAttribute="leading" secondItem="geW-yL-v3l" secondAttribute="trailing" constant="8" symbolic="YES" id="KVs-u7-unC"/>
+                <constraint firstItem="geW-yL-v3l" firstAttribute="baseline" secondItem="ZQV-Bu-kNX" secondAttribute="baseline" id="N4r-BD-OxE"/>
+                <constraint firstAttribute="trailing" secondItem="ZQV-Bu-kNX" secondAttribute="trailing" constant="20" id="WPB-gU-g95"/>
+                <constraint firstItem="Plb-Fb-pJW" firstAttribute="centerY" secondItem="399-Bv-9K4" secondAttribute="centerY" id="j2o-vb-n3K"/>
+                <constraint firstItem="geW-yL-v3l" firstAttribute="centerY" secondItem="ZQV-Bu-kNX" secondAttribute="centerY" id="lJu-ce-rSf"/>
+                <constraint firstItem="geW-yL-v3l" firstAttribute="baseline" secondItem="ZQV-Bu-kNX" secondAttribute="firstBaseline" id="tgZ-md-Gsg"/>
+                <constraint firstItem="Plb-Fb-pJW" firstAttribute="leading" secondItem="399-Bv-9K4" secondAttribute="leading" constant="20" id="wYx-n8-Xhg"/>
+            </constraints>
             <viewLayoutGuide key="safeArea" id="tn6-CL-nVF"/>
             <size key="customSize" width="327" height="50"/>
             <connections>
                 <outlet property="authorLabel" destination="Plb-Fb-pJW" id="yTw-Ss-vht"/>
                 <outlet property="playAudioButton" destination="ZQV-Bu-kNX" id="yxO-SS-tgE"/>
+                <outlet property="timeLabel" destination="geW-yL-v3l" id="1Vk-au-Ubu"/>
             </connections>
             <point key="canvasLocation" x="228" y="-46.776611694152926"/>
         </collectionViewCell>

@@ -62,11 +62,16 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             
             return cell
         case .audio:
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AddAudioPost", for: indexPath) as? ImagePostCollectionViewCell else { return UICollectionViewCell() }
-            
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AddAudioPost", for: indexPath) as? AudioPostCollectionViewCell else { return UICollectionViewCell() }
+            cell.audioPlayer = audioPlayer
+            cell.audioPlayer?.delegate = cell
             cell.post = post
             
-            loadImage(for: cell, forItemAt: indexPath)
+            let fontSize = UIFont.systemFontSize
+            let font = UIFont.monospacedDigitSystemFont(ofSize: fontSize, weight: .regular)
+            cell.timeLabel.font = font
+            
+
             return cell
         }
         
@@ -194,6 +199,7 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         }
     }
     
+    private let audioPlayer = Player()
     private let postController = PostController()
     private var operations = [String : Operation]()
     private let mediaFetchQueue = OperationQueue()
