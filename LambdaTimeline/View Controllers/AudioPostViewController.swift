@@ -27,9 +27,11 @@ class AudioPostViewController: UIViewController {
     
     //MARK: IBActions
     @IBAction func recordButtonWasTapped(_ sender: Any) {
+        audioRecorder.toggleRecording()
     }
     
     @IBAction func cancelButtonWasTapped(_ sender: Any) {
+        audioRecorder.cancelRecording()
     }
     
     @IBAction func createPost(_ sender: Any) {
@@ -37,7 +39,7 @@ class AudioPostViewController: UIViewController {
         view.endEditing(true)
         
         guard let audioFile = audioRecorder.currentFile else {
-                presentInformationalAlertController(title: "Uh-oh", message: "Make sure that you make a recording before posting.")
+                presentInformationalAlertController(title: "Uh-oh", message: "Make sure that you make a recording before posting. If you cancelled your recording then you will have to record again.")
                 return
         }
         
