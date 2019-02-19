@@ -9,10 +9,21 @@
 import UIKit
 import AVFoundation
 
-class AudioPostViewController: UIViewController {
+class AudioPostViewController: UIViewController, RecorderDelegate {
     //MARK: Private Properties
     private let audioRecorder = Recorder()
     private let postController = PostController()
+    //
+    private lazy var timeFormatter: DateComponentsFormatter = {
+        let f = DateComponentsFormatter()
+        //With this style, the hours/minutes/seconds will be seperated by colons
+        f.unitsStyle = .positional
+        //This formatting behavior will "pad zeroes as appropriate", meaning that zeroes will not be omitted where relevant
+        f.zeroFormattingBehavior = .pad
+        //The units allowed to show
+        f.allowedUnits = [.minute, .second]
+        return f
+    }()
     
     //MARK: IBOutlets
     @IBOutlet weak var recordButton: UIButton!
@@ -58,6 +69,18 @@ class AudioPostViewController: UIViewController {
                 self.navigationController?.popViewController(animated: true)
             }
         }
+    }
+    //MARK: Delegate Methods
+    func recorderDidChangeState(_ recorder: Recorder) {
+        updateViews()
+    }
+    
+    //MARK: Private Methods
+    private func updateViews() {
+        let isRecording = audioRecorder.isRecording
+        recordButton.setTitle(isRecording ? "Stop Recording" : "Record"
+            , for: .normal)
+        timeLabel.text = timeFormatter.string(from: audioRecorder.elapsedTime)
     }
     
 }

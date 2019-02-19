@@ -9,17 +9,30 @@
 import Foundation
 import AVFoundation
 
+protocol RecorderDelegate: AnyObject {
+    func recorderDidChangeState(_ recorder: Recorder)
+}
+
 ///Delegate of the audioRecorder
 class Recorder: NSObject {
+    //MARK: Private Properties
     private var audioRecorder: AVAudioRecorder?
     
     ///The most current audio file made from the user's recording. This is the only audio file that may be posted.
     var currentFile: URL?
+
+    ///Returns the time elapsed since the start of the current recording.
+    var elapsedTime: TimeInterval {
+        return audioRecorder?.currentTime ?? 0
+    }
     
     ///Indicate whether the audioRecorder is currently recording
     var isRecording: Bool {
         return audioRecorder?.isRecording ?? false
     }
+
+    weak var delegate: RecorderDelegate?
+    
     /**
      If the audioRecorder is currently recording, the audioRecorder will stop. If not, then it will begin recording.
      
@@ -38,6 +51,7 @@ class Recorder: NSObject {
     func cancelRecording() {
         currentFile = nil
     }
+    //MARK: Private Methods
     //Create the file path to store the recording and then begin to record. The file path is stored in the `currentFile` property for easy access in case the user decides to cancel.
     private func record() {
 
@@ -60,11 +74,18 @@ class Recorder: NSObject {
         currentFile = file
         
         audioRecorder?.record()
+        notifyDelegate()
+
     }
     //Stops recording. This method will also set the audioRecorder to nil, allowing the user to make a new recording should the user tap the record button again.
     private func stopRecording() {
         audioRecorder?.stop()
         audioRecorder = nil
+        notifyDelegate()
         
+    }
+    
+    private func notifyDelegate() {
+        delegate?.recorderDidChangeState(self)
     }
 }
