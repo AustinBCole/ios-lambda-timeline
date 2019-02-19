@@ -29,10 +29,14 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         let imagePostAction = UIAlertAction(title: "Image", style: .default) { (_) in
             self.performSegue(withIdentifier: "AddImagePost", sender: nil)
         }
+        let audioPostAction = UIAlertAction(title: "Audio", style: .default) { (_) in
+            self.performSegue(withIdentifier: "AddAudioPost", sender: nil)
+        }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         alert.addAction(imagePostAction)
+        alert.addAction(audioPostAction)
         alert.addAction(cancelAction)
         
         self.present(alert, animated: true, completion: nil)
@@ -57,7 +61,15 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             loadImage(for: cell, forItemAt: indexPath)
             
             return cell
+        case .audio:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AddAudioPost", for: indexPath) as? ImagePostCollectionViewCell else { return UICollectionViewCell() }
+            
+            cell.post = post
+            
+            loadImage(for: cell, forItemAt: indexPath)
+            return cell
         }
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -73,6 +85,13 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             guard let ratio = post.ratio else { return size }
             
             size.height = size.width * ratio
+            
+        case .audio: break
+            //TODO: Implement
+            
+        guard let ratio = post.ratio else { return size }
+        
+        size.height = size.width * ratio
         }
         
         return size
@@ -92,6 +111,19 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         
         guard let postID = postController.posts[indexPath.row].id else { return }
         operations[postID]?.cancel()
+    }
+    
+    func loadAudio(for audioPostCell: AudioPostCollectionViewCell, forItemAt indexPath: IndexPath) {
+        let post = postController.posts[indexPath.row]
+        
+        guard let postID = post.id else { return }
+        
+        if let mediaData = cache.value(for: postID),
+            let audioFile = URL(dataRepresentation: mediaData, relativeTo: nil) {
+            audioPostCell.audioFile = audioFile
+            self.collectionView.reloadItems(at: [indexPath])
+            return
+        }
     }
     
     func loadImage(for imagePostCell: ImagePostCollectionViewCell, forItemAt indexPath: IndexPath) {

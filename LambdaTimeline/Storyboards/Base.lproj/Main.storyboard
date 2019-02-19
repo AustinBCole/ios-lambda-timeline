@@ -80,6 +80,7 @@
                                     <outlet property="imageView" destination="cGr-Ya-osY" id="FWp-BM-0Cr"/>
                                     <outlet property="labelBackgroundView" destination="5zZ-2z-oK0" id="XjC-Of-Yj5"/>
                                     <outlet property="titleLabel" destination="tHt-lC-hYm" id="uRt-J9-5cc"/>
+                                    <segue destination="pyL-fd-hX2" kind="show" identifier="AddAudioPost" id="Qmo-st-Ni4"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -209,7 +210,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XXa-A2-VJT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1969" y="-195"/>
+            <point key="canvasLocation" x="1998" y="-227"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="gdW-Je-ais">
@@ -365,7 +366,79 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CdL-Y3-4ej" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1968.8" y="472.71364317841085"/>
+            <point key="canvasLocation" x="1217" y="925"/>
+        </scene>
+        <!--New Post-->
+        <scene sceneID="OzB-aG-fC7">
+            <objects>
+                <viewController id="pyL-fd-hX2" customClass="AudioPostViewController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="e8c-nJ-CDf">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="6u7-k6-O3r">
+                                <rect key="frame" x="40" y="280.5" width="295" height="106"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SIA-jP-isQ">
+                                        <rect key="frame" x="124.5" y="0.0" width="46" height="30"/>
+                                        <state key="normal" title="Button"/>
+                                        <connections>
+                                            <action selector="recordButtonWasTapped:" destination="pyL-fd-hX2" eventType="touchUpInside" id="Pv4-73-2GB"/>
+                                        </connections>
+                                    </button>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="be5-Q7-0pz">
+                                        <rect key="frame" x="0.0" y="38" width="295" height="30"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WES-2S-hjX">
+                                                <rect key="frame" x="0.0" y="0.0" width="42" height="30"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="mDA-sL-uYQ">
+                                                <rect key="frame" x="48" y="0.0" width="249" height="31"/>
+                                            </slider>
+                                        </subviews>
+                                    </stackView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x0n-OT-lCC">
+                                        <rect key="frame" x="124.5" y="76" width="46" height="30"/>
+                                        <state key="normal" title="Button"/>
+                                        <connections>
+                                            <action selector="cancelButtonWasTapped:" destination="pyL-fd-hX2" eventType="touchUpInside" id="UZf-TY-hti"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="be5-Q7-0pz" secondAttribute="trailing" id="8t8-Zv-qpP"/>
+                                    <constraint firstItem="be5-Q7-0pz" firstAttribute="leading" secondItem="6u7-k6-O3r" secondAttribute="leading" id="nLu-3S-FqQ"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="6u7-k6-O3r" firstAttribute="leading" secondItem="KNi-vt-mSw" secondAttribute="leading" constant="40" id="5Dy-9I-VXA"/>
+                            <constraint firstItem="KNi-vt-mSw" firstAttribute="trailing" secondItem="6u7-k6-O3r" secondAttribute="trailing" constant="40" id="8yj-zf-lCh"/>
+                            <constraint firstItem="6u7-k6-O3r" firstAttribute="centerY" secondItem="e8c-nJ-CDf" secondAttribute="centerY" id="AfH-jg-SCE"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="KNi-vt-mSw"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="New Post" id="MxA-mb-Hr6">
+                        <barButtonItem key="rightBarButtonItem" title="Post" id="52p-bf-SnH">
+                            <connections>
+                                <action selector="createPost:" destination="pyL-fd-hX2" id="5aK-8V-Efc"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="cancelButton" destination="x0n-OT-lCC" id="aLc-RF-n7U"/>
+                        <outlet property="recordButton" destination="SIA-jP-isQ" id="KP6-rp-Y1H"/>
+                        <outlet property="timeLabel" destination="WES-2S-hjX" id="UWy-YB-eAg"/>
+                        <outlet property="timeSlider" destination="mDA-sL-uYQ" id="hGh-yu-t9Y"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uxa-NI-pxM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1998" y="496"/>
         </scene>
     </scenes>
 </document>
