@@ -22,7 +22,15 @@ class Post {
         self.ratio = ratio
         self.mediaType = mediaType
         self.author = author
-        self.comments = [Comment(text: title, author: author)]
+        switch mediaType {
+        case .image:
+            self.comments = [Comment(text: title, audioData: nil, videoData: nil, author: author)]
+        case .audio:
+            self.comments = [Comment(text: title, audioData: try! Data(contentsOf: mediaURL), videoData: nil, author: author)]
+        case .video:
+            self.comments = [Comment(text: title, audioData: nil, videoData: try! Data(contentsOf: mediaURL), author: author)]
+        }
+        
         self.timestamp = timestamp
     }
     
