@@ -21,6 +21,11 @@ class AudioPostCollectionViewCell: UICollectionViewCell, PlayerDelegate {
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var playAudioButton: UIButton!
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        // Initialization code
+    }
+    
     //MARK: IBActions
     @IBAction func playAudioButtonWasTapped(_ sender: Any) {
         audioPlayer?.playPause(audioFile: audioFile!)

@@ -34,6 +34,11 @@
 		A22BF5DF221CADBF006BD130 /* Recorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22BF5DE221CADBF006BD130 /* Recorder.swift */; };
 		A22BF5E2221CBB07006BD130 /* AudioPostCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22BF5E1221CBB07006BD130 /* AudioPostCollectionViewCell.swift */; };
 		A22BF5E4221CBB9F006BD130 /* AudioPostCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A22BF5E3221CBB9F006BD130 /* AudioPostCollectionViewCell.xib */; };
+		A22BF638221E001B006BD130 /* VideoPostCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22BF636221E001B006BD130 /* VideoPostCollectionViewCell.swift */; };
+		A22BF639221E001B006BD130 /* VideoPostCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A22BF637221E001B006BD130 /* VideoPostCollectionViewCell.xib */; };
+		A22BF63B221E137C006BD130 /* VideoPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22BF63A221E137C006BD130 /* VideoPlayerView.swift */; };
+		A22BF63D221F5C10006BD130 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22BF63C221F5C0F006BD130 /* CameraViewController.swift */; };
+		A22BF63F221F5C2C006BD130 /* CameraPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22BF63E221F5C2C006BD130 /* CameraPreviewView.swift */; };
 		A285C684221B63C80030523E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A285C683221B63C80030523E /* GoogleService-Info.plist */; };
 		A285C688221B70E40030523E /* SliderInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = A285C687221B70E40030523E /* SliderInput.swift */; };
 		E453457955DF907FCBD117F1 /* Pods_LambdaTimeline.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA39CACB677861CF84322FB5 /* Pods_LambdaTimeline.framework */; };
@@ -71,6 +76,11 @@
 		A22BF5DE221CADBF006BD130 /* Recorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recorder.swift; sourceTree = "<group>"; };
 		A22BF5E1221CBB07006BD130 /* AudioPostCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPostCollectionViewCell.swift; sourceTree = "<group>"; };
 		A22BF5E3221CBB9F006BD130 /* AudioPostCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AudioPostCollectionViewCell.xib; sourceTree = "<group>"; };
+		A22BF636221E001B006BD130 /* VideoPostCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPostCollectionViewCell.swift; sourceTree = "<group>"; };
+		A22BF637221E001B006BD130 /* VideoPostCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoPostCollectionViewCell.xib; sourceTree = "<group>"; };
+		A22BF63A221E137C006BD130 /* VideoPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerView.swift; sourceTree = "<group>"; };
+		A22BF63C221F5C0F006BD130 /* CameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CameraViewController.swift; path = ../../../Development/VideoRecording/VideoRecording/CameraViewController.swift; sourceTree = "<group>"; };
+		A22BF63E221F5C2C006BD130 /* CameraPreviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CameraPreviewView.swift; path = ../../../Development/VideoRecording/VideoRecording/CameraPreviewView.swift; sourceTree = "<group>"; };
 		A285C683221B63C80030523E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A285C687221B70E40030523E /* SliderInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderInput.swift; sourceTree = "<group>"; };
 		AA39CACB677861CF84322FB5 /* Pods_LambdaTimeline.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LambdaTimeline.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -153,6 +163,7 @@
 		46463797216FFF7400E7FF73 /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
+				A22BF5E5221CBBA8006BD130 /* Nibs */,
 				4646377F216FDE4B00E7FF73 /* Main.storyboard */,
 				46463784216FDE4C00E7FF73 /* LaunchScreen.storyboard */,
 			);
@@ -175,6 +186,7 @@
 				46CFE6F421707D0000E7FF73 /* ImagePostViewController.swift */,
 				46D571F72173FC2700E7FF73 /* ImagePostDetailTableViewController.swift */,
 				A22BF5D8221CA7E3006BD130 /* AudioPostViewController.swift */,
+				A22BF63C221F5C0F006BD130 /* CameraViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -185,7 +197,9 @@
 				A285C687221B70E40030523E /* SliderInput.swift */,
 				46CFE7022171572600E7FF73 /* ImagePostCollectionViewCell.swift */,
 				A22BF5E1221CBB07006BD130 /* AudioPostCollectionViewCell.swift */,
-				A22BF5E5221CBBA8006BD130 /* Nibs */,
+				A22BF636221E001B006BD130 /* VideoPostCollectionViewCell.swift */,
+				A22BF63E221F5C2C006BD130 /* CameraPreviewView.swift */,
+				A22BF63A221E137C006BD130 /* VideoPlayerView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -244,6 +258,7 @@
 			isa = PBXGroup;
 			children = (
 				A22BF5E3221CBB9F006BD130 /* AudioPostCollectionViewCell.xib */,
+				A22BF637221E001B006BD130 /* VideoPostCollectionViewCell.xib */,
 			);
 			path = Nibs;
 			sourceTree = "<group>";
@@ -311,6 +326,7 @@
 			files = (
 				46463786216FDE4C00E7FF73 /* LaunchScreen.storyboard in Resources */,
 				A285C684221B63C80030523E /* GoogleService-Info.plist in Resources */,
+				A22BF639221E001B006BD130 /* VideoPostCollectionViewCell.xib in Resources */,
 				A22BF5E4221CBB9F006BD130 /* AudioPostCollectionViewCell.xib in Resources */,
 				46463783216FDE4C00E7FF73 /* Assets.xcassets in Resources */,
 				46463781216FDE4B00E7FF73 /* Main.storyboard in Resources */,
@@ -410,6 +426,7 @@
 				46CFE6F92170862C00E7FF73 /* ShiftableViewController.swift in Sources */,
 				4646377C216FDE4B00E7FF73 /* AppDelegate.swift in Sources */,
 				A22BF5DD221CADB9006BD130 /* Player.swift in Sources */,
+				A22BF638221E001B006BD130 /* VideoPostCollectionViewCell.swift in Sources */,
 				46CFE6FD217154F500E7FF73 /* Networking.swift in Sources */,
 				46CFE6F521707D0000E7FF73 /* ImagePostViewController.swift in Sources */,
 				A22BF5D9221CA7E3006BD130 /* AudioPostViewController.swift in Sources */,
@@ -417,9 +434,12 @@
 				46463790216FFD1B00E7FF73 /* Post.swift in Sources */,
 				46CFE6F32170757F00E7FF73 /* User+DictionaryRepresentation.swift in Sources */,
 				A22BF5E2221CBB07006BD130 /* AudioPostCollectionViewCell.swift in Sources */,
+				A22BF63D221F5C10006BD130 /* CameraViewController.swift in Sources */,
 				46D571F32172D43B00E7FF73 /* Cache.swift in Sources */,
 				46CFE7012171559500E7FF73 /* FetchMediaOperation.swift in Sources */,
+				A22BF63F221F5C2C006BD130 /* CameraPreviewView.swift in Sources */,
 				A22BF5DF221CADBF006BD130 /* Recorder.swift in Sources */,
+				A22BF63B221E137C006BD130 /* VideoPlayerView.swift in Sources */,
 				46D571F82173FC2700E7FF73 /* ImagePostDetailTableViewController.swift in Sources */,
 				46CFE7032171572600E7FF73 /* ImagePostCollectionViewCell.swift in Sources */,
 				4646379C2170091A00E7FF73 /* PostController.swift in Sources */,

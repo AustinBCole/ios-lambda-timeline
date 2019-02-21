@@ -11,22 +11,15 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="399-Bv-9K4" customClass="AudioPostCollectionViewCell" customModule="LambdaTimeline" customModuleProvider="target">
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="AudioPostCell" id="399-Bv-9K4" customClass="AudioPostCollectionViewCell" customModule="LambdaTimeline" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="327" height="50"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                 <rect key="frame" x="0.0" y="0.0" width="327" height="50"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZQV-Bu-kNX">
-                        <rect key="frame" x="261" y="10" width="46" height="30"/>
-                        <state key="normal" title="Button"/>
-                        <connections>
-                            <action selector="playAudioButtonWasTapped:" destination="399-Bv-9K4" eventType="touchUpInside" id="ryH-nr-c6U"/>
-                        </connections>
-                    </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="geW-yL-v3l">
-                        <rect key="frame" x="211" y="15" width="42" height="20"/>
+                        <rect key="frame" x="185" y="15" width="42" height="20"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -37,6 +30,13 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZQV-Bu-kNX">
+                        <rect key="frame" x="235" y="10" width="72" height="30"/>
+                        <state key="normal" title="Play Audio"/>
+                        <connections>
+                            <action selector="playAudioButtonWasTapped:" destination="399-Bv-9K4" eventType="touchUpInside" id="ryH-nr-c6U"/>
+                        </connections>
+                    </button>
                 </subviews>
             </view>
             <constraints>

@@ -9,17 +9,19 @@
 import UIKit
 import FirebaseAuth
 import FirebaseUI
+import AVKit
 
-class PostsCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class PostsCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, AVPlayerViewControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         postController.observePosts { (_) in
             DispatchQueue.main.async {
                 self.collectionView.reloadData()
             }
         }
+        self.collectionView.register(UINib(nibName:"AudioPostCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "AudioPostCell")
+        
     }
     
     @IBAction func addPost(_ sender: Any) {
@@ -32,11 +34,15 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         let audioPostAction = UIAlertAction(title: "Audio", style: .default) { (_) in
             self.performSegue(withIdentifier: "AddAudioPost", sender: nil)
         }
+        let videoPostAction = UIAlertAction(title: "Video", style: .default) { (_) in
+            self.performSegue(withIdentifier: "AddVideoPost", sender: nil)
+        }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         alert.addAction(imagePostAction)
         alert.addAction(audioPostAction)
+        alert.addAction(videoPostAction)
         alert.addAction(cancelAction)
         
         self.present(alert, animated: true, completion: nil)
@@ -62,19 +68,22 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             
             return cell
         case .audio:
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AddAudioPost", for: indexPath) as? AudioPostCollectionViewCell else { return UICollectionViewCell() }
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AudioPostCell", for: indexPath) as? AudioPostCollectionViewCell else { return UICollectionViewCell() }
             cell.audioPlayer = audioPlayer
             cell.audioPlayer?.delegate = cell
-            cell.post = post
-            
+            cell.authorLabel.text = post.author.displayName
             let fontSize = UIFont.systemFontSize
             let font = UIFont.monospacedDigitSystemFont(ofSize: fontSize, weight: .regular)
             cell.timeLabel.font = font
             
-
+            
+            return cell
+        case .video:
+            //TODO: Implenet non-placeholder code
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "VideoPostCell", for: indexPath) as? VideoPostCollectionViewCell else { return UICollectionViewCell() }
+            loadVideo(for: cell, forItemAt: indexPath)
             return cell
         }
-        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -91,14 +100,17 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             
             size.height = size.width * ratio
             
-        case .audio: break
+        case .audio:
             //TODO: Implement
             
-        guard let ratio = post.ratio else { return size }
-        
-        size.height = size.width * ratio
+            guard let ratio = post.ratio else { return size }
+            
+            size.height = size.width * ratio
+        case .video:
+            //TODO: Implement
+            break
+            
         }
-        
         return size
     }
     
@@ -129,6 +141,90 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             self.collectionView.reloadItems(at: [indexPath])
             return
         }
+        
+        let fetchOp = FetchMediaOperation(post: post, postController: postController)
+        
+        let cacheOp = BlockOperation {
+            if let data = fetchOp.mediaData {
+                self.cache.cache(value: data, for: postID)
+                DispatchQueue.main.async {
+                    self.collectionView.reloadItems(at: [indexPath])
+                }
+            }
+        }
+        
+        let completionOp = BlockOperation {
+            defer { self.operations.removeValue(forKey: postID) }
+            
+            if let currentIndexPath = self.collectionView?.indexPath(for: audioPostCell),
+                currentIndexPath != indexPath {
+                print("Got image for now-reused cell")
+                return
+            }
+            
+            if let data = fetchOp.mediaData {
+                audioPostCell.audioFile = URL(dataRepresentation: data, relativeTo: nil)
+                self.collectionView.reloadItems(at: [indexPath])
+            }
+        }
+        
+        cacheOp.addDependency(fetchOp)
+        completionOp.addDependency(fetchOp)
+        
+        mediaFetchQueue.addOperation(fetchOp)
+        mediaFetchQueue.addOperation(cacheOp)
+        OperationQueue.main.addOperation(completionOp)
+        
+        operations[postID] = fetchOp
+    }
+    
+    func loadVideo(for videoPostCell: VideoPostCollectionViewCell, forItemAt indexPath: IndexPath) {
+        let post = postController.posts[indexPath.row]
+        
+        guard let postID = post.id else { return }
+        
+        if let mediaData = cache.value(for: postID),
+            let videoURL = URL(dataRepresentation: mediaData, relativeTo: nil) {
+            videoPostCell.player = AVPlayer(url: videoURL)
+            self.collectionView.reloadItems(at: [indexPath])
+            return
+        }
+        
+        let fetchOp = FetchMediaOperation(post: post, postController: postController)
+        
+        let cacheOp = BlockOperation {
+            if let data = fetchOp.mediaData {
+                self.cache.cache(value: data, for: postID)
+                DispatchQueue.main.async {
+                    self.collectionView.reloadItems(at: [indexPath])
+                }
+            }
+        }
+        
+        let completionOp = BlockOperation {
+            defer { self.operations.removeValue(forKey: postID) }
+            
+            if let currentIndexPath = self.collectionView?.indexPath(for: videoPostCell),
+                currentIndexPath != indexPath {
+                print("Got image for now-reused cell")
+                return
+            }
+            
+            if let data = fetchOp.mediaData {
+                let videoURL = URL(dataRepresentation: data, relativeTo: nil)
+                videoPostCell.player = AVPlayer(url: videoURL!)
+                self.collectionView.reloadItems(at: [indexPath])
+            }
+        }
+        
+        cacheOp.addDependency(fetchOp)
+        completionOp.addDependency(fetchOp)
+        
+        mediaFetchQueue.addOperation(fetchOp)
+        mediaFetchQueue.addOperation(cacheOp)
+        OperationQueue.main.addOperation(completionOp)
+        
+        operations[postID] = fetchOp
     }
     
     func loadImage(for imagePostCell: ImagePostCollectionViewCell, forItemAt indexPath: IndexPath) {

@@ -22,30 +22,48 @@ class PostController {
             
             guard let mediaURL = mediaURL else { completion(false); return }
             
-            let imagePost = Post(title: title, mediaURL: mediaURL, mediaType: mediaType, ratio: ratio, author: author, timestamp: Date())
-            
-            self.postsRef.childByAutoId().setValue(imagePost.dictionaryRepresentation) { (error, ref) in
-                if let error = error {
-                    NSLog("Error posting image post: \(error)")
-                    completion(false)
+            switch mediaType {
+            case .image:
+                
+                let imagePost = Post(title: title, mediaURL: mediaURL, audioData: mediaData, mediaType: .image, author: author)
+                
+                self.postsRef.childByAutoId().setValue(imagePost.dictionaryRepresentation) { (error, ref) in
+                    if let error = error {
+                        NSLog("Error posting image post: \(error)")
+                        completion(false)
+                    }
+                    
+                    completion(true)
                 }
-        
-                completion(true)
+            case .audio:
+                
+                let audioPost = Post(title: title, mediaURL: mediaURL, audioData: mediaData, mediaType: .audio, author: author)
+                
+                self.postsRef.childByAutoId().setValue(audioPost.dictionaryRepresentation) { (error, ref) in
+                    if let error = error {
+                        NSLog("Error posting image post: \(error)")
+                        completion(false)
+                    }
+                    completion(true)
+                }
+            case .video:
+                //TODO: Code here
+                return
             }
         }
     }
     
-    func addComment(with text: String, to post: inout Post) {
+    func addComment(with text: String?, with audioData: Data?, to post: inout Post) {
         
         guard let currentUser = Auth.auth().currentUser,
             let author = Author(user: currentUser) else { return }
         
-        let comment = Comment(text: text, author: author)
+        let comment = Comment(text: text, audioData: audioData , author: author)
         post.comments.append(comment)
         
         savePostToFirebase(post)
     }
-
+    
     func observePosts(completion: @escaping (Error?) -> Void) {
         
         postsRef.observe(.value, with: { (snapshot) in
@@ -78,7 +96,7 @@ class PostController {
         
         ref.setValue(post.dictionaryRepresentation)
     }
-
+    
     private func store(mediaData: Data, mediaType: MediaType, completion: @escaping (URL?) -> Void) {
         
         let mediaID = UUID().uuidString
